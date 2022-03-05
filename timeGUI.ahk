@@ -10,7 +10,10 @@ Gui, Add, Edit, w200 vDate4
 Gui, Add, Button, , &Send All to Clipboard
 Gui, Add, Button, Default, &Convert Time
 Gui +MinimizeBox
-Gui, Show, , Insert Specified Time
+
+; CTRL + ` builds GUI
+^`::
+    Gui, Show, , Insert Specified Time
 return
 
 ; Send to clipboard and close
@@ -22,7 +25,7 @@ ButtonSendAlltoClipboard(){
     string := dateEST . " [" . datePST . " | " . dateUTC . " | " . dateIST . "]"
     Clipboard := string
     WinClose, Insert Specified Time
-    return
+return
 }
 
 ; Format date + time
@@ -52,8 +55,8 @@ formatDates:
     utcTime := backupString
 return
 
-; Exit
-GuiEscape:
-GuiClose:
-ButtonCancel:
-ExitApp
+; Exit app, removing for now so we can retrigger with keyboard shortcut
+; GuiEscape:
+; GuiClose:
+; ButtonCancel:
+; ExitApp
