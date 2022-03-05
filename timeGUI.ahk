@@ -7,16 +7,17 @@ Gui, Add, Edit, w200 vDate1
 Gui, Add, Edit, w200 vDate2
 Gui, Add, Edit, w200 vDate3
 Gui, Add, Edit, w200 vDate4
-Gui, Add, Button, , &Send All to Clipboard
-Gui, Add, Button, Default, &Convert Time
+Gui, Add, Button, Default, &Send All to Clipboard
 Gui +MinimizeBox
 
 ; CTRL + ` builds GUI
 ^`::
+    ; Winget, Active_Window, ID, A
+    Active_Window := WinExist("A")
     Gui, Show, , Insert Specified Time
 return
 
-; Send to clipboard and close
+; Press Enter to send to clipboard and close
 ButtonSendAlltoClipboard(){
     global dateEST
     global datePST
@@ -25,6 +26,8 @@ ButtonSendAlltoClipboard(){
     string := dateEST . " [" . datePST . " | " . dateUTC . " | " . dateIST . "]"
     Clipboard := string
     WinClose, Insert Specified Time
+    WinActivate, ahk_id %Active_Window%
+    Send, ^v
 return
 }
 
@@ -55,7 +58,7 @@ formatDates:
     utcTime := backupString
 return
 
-; Exit app, removing for now so we can retrigger with keyboard shortcut
+; Exit app, removing for now so we can easily retrigger with keyboard shortcut
 ; GuiEscape:
 ; GuiClose:
 ; ButtonCancel:
