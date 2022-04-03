@@ -66,7 +66,7 @@ return
 ; Return time object from API
 time(area) {
     WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-    WinHttp.Open("GET", "http://worldtimeapi.org/api/timezone/" . area, false), WinHttp.Send()
+    WinHttp.Open("GET", "https://worldtimeapi.org/api/timezone/" . area, false), WinHttp.Send()
     timeObject := JsonToAHK(WinHttp.ResponseText) 
 Return timeObject
 }
