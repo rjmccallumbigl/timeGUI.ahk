@@ -7,23 +7,28 @@ Gui, Add, Edit, w200 vDate1
 Gui, Add, Edit, w200 vDate2
 Gui, Add, Edit, w200 vDate3
 Gui, Add, Edit, w200 vDate4
+Gui, Add, Edit, w200 vDate5
 Gui, Add, Button, Default, &Send All to Clipboard
 Gui +MinimizeBox
 
 ; CTRL + ` builds GUI
 ^`::
-    ; Winget, Active_Window, ID, A
     Active_Window := WinExist("A")
     Gui, Show, , Insert Specified Time
 return
 
 ; Press Enter to send to clipboard and close
 ButtonSendAlltoClipboard(){
+
+    ; Variables
     global dateEST
     global datePST
+    global dateCST
     global dateUTC
     global dateIST
-    string := dateEST . " [" . datePST . " | " . dateUTC . " | " . dateIST . "]"
+
+    ; Build string that we'll send to clipboard for pasting
+    string := dateEST . " [" . datePST . " | " . dateCST . " | " . dateUTC . " | " . dateIST . "]"
     Clipboard := string
     WinClose, Insert Specified Time
     WinActivate, ahk_id %Active_Window%
@@ -34,31 +39,43 @@ return
 ; Format date + time
 ButtonConvertTime:
 formatDates:
+
+    ; Variables
     GuiControlGet, MyEdit
     utcTime := MyEdit
     backupString := utcTime
-    ; estOffset := -5
-    ; pstOffset := -8
+
+    ; Grab timezone offsets from API
     estObject := time("America/New_York")
     estOffset := estObject.utc_offset
     pstObject := time("PST8PDT")
     pstOffset := pstObject.utc_offset
+    cstObject := time("CST6CDT")
+    cstOffset := cstObject.utc_offset
     istOffset := 5.5
+
+    ; Update GUI with formatted time
     FormatTime, dateUTC, %utcTime%, MMM. d @ h:mmtt UTC
     GuiControl, Text, Date1, %dateUTC%
+
     utcTime += estOffset, hours
     FormatTime, dateEST, %utcTime%, MMM. d @ h:mmtt EST
     GuiControl, Text, Date2, %dateEST%
     utcTime := backupString
 
+    utcTime += cstOffset, hours
+    FormatTime, dateCST, %utcTime%, MMM. d @ h:mmtt CST
+    GuiControl, Text, Date3, %dateCST%
+    utcTime := backupString
+
     utcTime += pstOffset, hours
     FormatTime, datePST, %utcTime%, MMM. d @ h:mmtt PST
-    GuiControl, Text, Date3, %datePST%
+    GuiControl, Text, Date4, %datePST%
     utcTime := backupString
 
     utcTime += istOffset, hours
     FormatTime, dateIST, %utcTime%, MMM. d @ h:mmtt IST
-    GuiControl, Text, Date4, %dateIST%
+    GuiControl, Text, Date5, %dateIST%
     utcTime := backupString
 return
 
