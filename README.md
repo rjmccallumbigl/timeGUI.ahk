@@ -8,6 +8,6 @@ Then press Enter or click the button to paste from clipboard in this format: `Ma
 
  ## Notes
 * Can be downloaded and launched from executable if you don't have AHK installed, then the executable can be saved in your `shell:startup` folder: https://github.com/rjmccallumbigl/timeGUI.ahk/blob/main/timeGUI.exe
-* As is, will handle EST + PST + UTC + IST in that order. Time zones can be modified from the code.
+* As is, will handle EST + CST + PST + UTC + IST in that order. Time zones can be modified from the code.
 * ~~The UTC offsets are also hardcoded, but the script can be modified to call the correct offset during DST hours.~~
   * Update: UTC offset for EST & PST is autuomatically grabbed via API.
