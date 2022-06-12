@@ -19,6 +19,7 @@ WinTitle := "Insert Specified Time"
     } Else {
         Active_Window := WinExist("A")
         Gui, Show, , Insert Specified Time
+        WinSet, AlwaysOnTop, On, %WinTitle%
     }
 return
 
