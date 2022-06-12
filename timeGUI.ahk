@@ -10,11 +10,16 @@ Gui, Add, Edit, w200 vDate4
 Gui, Add, Edit, w200 vDate5
 Gui, Add, Button, Default, &Send All to Clipboard
 Gui +MinimizeBox
+WinTitle := "Insert Specified Time"
 
 ; CTRL + ` builds GUI
 ^`::
-    Active_Window := WinExist("A")
-    Gui, Show, , Insert Specified Time
+    if WinExist(WinTitle){
+        WinClose
+    } Else {
+        Active_Window := WinExist("A")
+        Gui, Show, , Insert Specified Time
+    }
 return
 
 ; Press Enter to send to clipboard and close
