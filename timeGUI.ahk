@@ -2,6 +2,29 @@
 SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 
+/*
+**********************************************************************************
+ *
+ * DESCRIPTION
+ * Use a popup window to convert time zones and save to clipboard
+ * Inspiration: https://www.autohotkey.com/boards/viewtopic.php?t=36691
+ *
+ * SOURCE
+ * https://www.autohotkey.com/board/topic/4310-capshift-slow-down-and-extend-the-caps-lock-key/
+ *
+ * VERSION
+ * 0.4.0
+ *
+ * USAGE
+ * Select your text input window
+ * Press CTRL + ` (above Tab on the keyboard)
+ * Select your requested time with the mouse or with d-pad
+ * Press Enter or click "Send All to Clipboard" to save the time to clipboard
+ * The string will also be automatically sent to the currently active input window
+ *
+**********************************************************************************
+*/
+
 ; Build GUI
 Gui, Add, DateTime, vMyEdit gformatDates choose%A_NowUTC%, MMM. d @ h:mmtt 'UTC'
 Gui, Add, Edit, w200 vDate1
