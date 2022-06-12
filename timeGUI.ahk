@@ -84,32 +84,32 @@ return
 time(area) {
     WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
     WinHttp.Open("GET", "https://worldtimeapi.org/api/timezone/" . area, false), WinHttp.Send()
-    timeObject := JsonToAHK(WinHttp.ResponseText) 
+    timeObject := JsonToAHK(WinHttp.ResponseText)
 Return timeObject
 }
 
 ; https://www.autohotkey.com/boards/viewtopic.php?t=67583
 ; Convert JSON to AHK object
-JsonToAHK(json, rec := false) { 
-    static doc := ComObjCreate("htmlfile") 
-    , __ := doc.write("<meta http-equiv=""X-UA-Compatible"" content=""IE=9"">") 
-    , JS := doc.parentWindow 
-    if !rec 
-        obj := %A_ThisFunc%(JS.eval("(" . json . ")"), true) 
-    else if !IsObject(json) 
-        obj := json 
-    else if JS.Object.prototype.toString.call(json) == "[object Array]" { 
-        obj := [] 
-        Loop % json.length 
-            obj.Push( %A_ThisFunc%(json[A_Index - 1], true) ) 
-    } 
-    else { 
-        obj := {} 
-        keys := JS.Object.keys(json) 
-        Loop % keys.length { 
-            k := keys[A_Index - 1] 
-            obj[k] := %A_ThisFunc%(json[k], true) 
-        } 
-    } 
-Return obj 
-} 
+JsonToAHK(json, rec := false) {
+    static doc := ComObjCreate("htmlfile")
+    , __ := doc.write("<meta http-equiv=""X-UA-Compatible"" content=""IE=9"">")
+    , JS := doc.parentWindow
+    if !rec
+        obj := %A_ThisFunc%(JS.eval("(" . json . ")"), true)
+    else if !IsObject(json)
+        obj := json
+    else if JS.Object.prototype.toString.call(json) == "[object Array]" {
+        obj := []
+        Loop % json.length
+            obj.Push( %A_ThisFunc%(json[A_Index - 1], true) )
+    }
+    else {
+        obj := {}
+        keys := JS.Object.keys(json)
+        Loop % keys.length {
+            k := keys[A_Index - 1]
+            obj[k] := %A_ThisFunc%(json[k], true)
+        }
+    }
+Return obj
+}
